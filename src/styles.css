@@ -1,0 +1,23 @@
+h1 {
+  font-size: 4rem;
+}
+
+.sup-cl {
+  font-size: 1.5rem;
+}
+
+.today-sun {
+  font-size: 2rem;
+}
+
+#cel-degree,
+#far-degree {
+  color: #0000ff;
+}
+
+#cel-degree:hover,
+#far-degree:hover {
+  color: #2a85fc;
+  cursor: pointer;
+  text-decoration: underline;
+}
