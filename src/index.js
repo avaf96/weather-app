@@ -25,7 +25,7 @@ let celDegreeRounded = 0;
 let farDegree = 0;
 
 // default city
-// let apiKey = "";
+let apiKey = "b88bf542c765dd6636e18de839741a48";
 let city = "Shiraz";
 let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 axios.get(apiUrl).then(function (response) {
@@ -86,11 +86,19 @@ currentBtn.addEventListener("click", function (event) {
 });
 
 // cel to far degree
-let celDegBtn = document.querySelector("#cel-degree");
-let farDegBtn = document.querySelector("#far-degree");
+let celDegBtn = document.querySelector(".cel-degree");
+let farDegBtn = document.querySelector(".far-degree");
 celDegBtn.addEventListener("click", function () {
   degreeH1.innerHTML = celDegreeRounded;
+  celDegBtn.classList.add("active");
+  celDegBtn.classList.remove("deactive");
+  farDegBtn.classList.add("deactive");
+  farDegBtn.classList.remove("active");
 });
 farDegBtn.addEventListener("click", function () {
   degreeH1.innerHTML = farDegree;
+  farDegBtn.classList.add("active");
+  farDegBtn.classList.remove("deactive");
+  celDegBtn.classList.add("deactive");
+  celDegBtn.classList.remove("active");
 });

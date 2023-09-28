@@ -10,14 +10,23 @@ h1 {
   font-size: 2rem;
 }
 
-#cel-degree,
-#far-degree {
-  color: #0000ff;
+.cel-degree {
+  color: #2d2d2d;
+}
+.far-degree {
+  color: #808080;
 }
 
-#cel-degree:hover,
-#far-degree:hover {
-  color: #2a85fc;
+.active {
+  color: #2d2d2d;
+  text-decoration: none;
+}
+
+.deactive {
+  color: #808080;
+}
+
+.deactive:hover {
   cursor: pointer;
   text-decoration: underline;
 }
