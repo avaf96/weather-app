@@ -31,8 +31,8 @@ let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=me
 axios.get(apiUrl).then(function (response) {
   cityName.innerHTML = response.data.name;
   weatherdesc.innerHTML = response.data.weather[0].main;
-  humidity.innerHTML = "Humidity: " + response.data.main.humidity;
-  wind.innerHTML = "Wind: " + response.data.wind.speed + " km/h";
+  humidity.innerHTML = "Humidity: " + response.data.main.humidity + "%";
+  wind.innerHTML = "Wind: " + response.data.wind.speed + " meter/sec";
   celDegree = response.data.main.temp;
   farDegree = Math.round(celDegree * (9 / 5) + 32);
   celDegreeRounded = Math.round(celDegree);

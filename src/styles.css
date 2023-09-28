@@ -26,7 +26,8 @@ h1 {
   color: #808080;
 }
 
-.deactive:hover {
+.cel-degree:hover,
+.far-degree:hover {
   cursor: pointer;
   text-decoration: underline;
 }
