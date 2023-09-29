@@ -20,6 +20,7 @@ let humidity = document.querySelector(".humidity");
 let wind = document.querySelector(".wind");
 let weatherdesc = document.querySelector(".weather-desc");
 let degreeH1 = document.querySelector(".degree-h1");
+let icon_img = document.querySelector(".today-icon");
 let celDegree = 0;
 let celDegreeRounded = 0;
 let farDegree = 0;
@@ -28,7 +29,9 @@ let farDegree = 0;
 let apiKey = "b88bf542c765dd6636e18de839741a48";
 let city = "Shiraz";
 let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
 axios.get(apiUrl).then(function (response) {
+  console.log(response);
   cityName.innerHTML = response.data.name;
   weatherdesc.innerHTML = response.data.weather[0].main;
   humidity.innerHTML = "Humidity: " + response.data.main.humidity + "%";
@@ -37,6 +40,9 @@ axios.get(apiUrl).then(function (response) {
   farDegree = Math.round(celDegree * (9 / 5) + 32);
   celDegreeRounded = Math.round(celDegree);
   degreeH1.innerHTML = celDegreeRounded;
+  let icon_code = response.data.weather[0].icon;
+  let icon_url = `https://openweathermap.org/img/wn/${icon_code}@2x.png`;
+  icon_img.setAttribute("src", icon_url);
 });
 
 // search btn
@@ -52,11 +58,14 @@ searchBtn.addEventListener("click", function (event) {
     cityName.innerHTML = response.data.name;
     weatherdesc.innerHTML = response.data.weather[0].main;
     humidity.innerHTML = "Humidity: " + response.data.main.humidity;
-    wind.innerHTML = "Wind: " + response.data.wind.speed + " km/h";
+    wind.innerHTML = "Wind: " + response.data.wind.speed + " meter/sec";
     celDegree = response.data.main.temp;
     farDegree = Math.round(celDegree * (9 / 5) + 32);
     celDegreeRounded = Math.round(celDegree);
     degreeH1.innerHTML = celDegreeRounded;
+    let icon_code = response.data.weather[0].icon;
+    let icon_url = `https://openweathermap.org/img/wn/${icon_code}@2x.png`;
+    icon_img.setAttribute("src", icon_url);
   });
 });
 
@@ -77,11 +86,14 @@ currentBtn.addEventListener("click", function (event) {
     cityName.innerHTML = response.data.name;
     weatherdesc.innerHTML = response.data.weather[0].main;
     humidity.innerHTML = "Humidity: " + response.data.main.humidity;
-    wind.innerHTML = "Wind: " + response.data.wind.speed + " km/h";
+    wind.innerHTML = "Wind: " + response.data.wind.speed + " meter/sec";
     celDegree = response.data.main.temp;
     farDegree = Math.round(celDegree * (9 / 5) + 32);
     celDegreeRounded = Math.round(celDegree);
     degreeH1.innerHTML = celDegreeRounded;
+    let icon_code = response.data.weather[0].icon;
+    let icon_url = `https://openweathermap.org/img/wn/${icon_code}@2x.png`;
+    icon_img.setAttribute("src", icon_url);
   });
 });
 
