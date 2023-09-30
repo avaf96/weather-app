@@ -31,3 +31,9 @@ h1 {
   cursor: pointer;
   text-decoration: underline;
 }
+
+.week-day,
+.min-degree,
+.max-degree {
+  font-size: 14px;
+}

@@ -14,6 +14,23 @@ let day = days[now.getDay()];
 let time = `${now.getHours()}:${now.getMinutes()}`;
 todaySec.innerHTML = day + " " + time;
 
+function displayForecast() {
+  let forecast_div = document.querySelector("#forecast");
+  forecast_div.innerHTML = `
+    <div class="col text-center">
+      <p class="week-day text-secondary m-0">Tue</p>
+      <img
+        width="36"
+        src="https://openweathermap.org/img/wn/01d@2x.png"
+        alt="weather-condition"
+      />
+      <p class="m-0">
+        <span class="max-degree text-dark">30°</span>
+        <span class="min-degree text-secondary">20°</span>
+      </p>
+    </div>`;
+}
+
 // variables
 let cityName = document.querySelector(".city-name");
 let humidity = document.querySelector(".humidity");
@@ -114,3 +131,5 @@ farDegBtn.addEventListener("click", function () {
   celDegBtn.classList.add("deactive");
   celDegBtn.classList.remove("active");
 });
+
+displayForecast();
