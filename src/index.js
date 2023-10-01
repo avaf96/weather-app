@@ -16,9 +16,13 @@ todaySec.innerHTML = day + " " + time;
 
 function displayForecast() {
   let forecast_div = document.querySelector("#forecast");
-  forecast_div.innerHTML = `
-    <div class="col text-center">
-      <p class="week-day text-secondary m-0">Tue</p>
+  let forcastHTML = "";
+  let days = ["Sat", "Sun", "Mon", "Tue", "Wed"];
+  days.forEach(function (day) {
+    forcastHTML =
+      forcastHTML +
+      `<div class="col text-center">
+      <p class="week-day text-secondary m-0">${day}</p>
       <img
         width="36"
         src="https://openweathermap.org/img/wn/01d@2x.png"
@@ -29,6 +33,9 @@ function displayForecast() {
         <span class="min-degree text-secondary">20°</span>
       </p>
     </div>`;
+  });
+
+  forecast_div.innerHTML = forcastHTML;
 }
 
 // variables
