@@ -1,3 +1,14 @@
+// variables
+let cityName = document.querySelector(".city-name");
+let humidity = document.querySelector(".humidity");
+let wind = document.querySelector(".wind");
+let weatherdesc = document.querySelector(".weather-desc");
+let degreeH1 = document.querySelector(".degree-h1");
+let icon_img = document.querySelector(".today-icon");
+let celDegree = 0;
+let celDegreeRounded = 0;
+let farDegree = 0;
+
 // default date
 let todaySec = document.querySelector(".today-sec");
 let now = new Date();
@@ -14,7 +25,13 @@ let day = days[now.getDay()];
 let time = `${now.getHours()}:${now.getMinutes()}`;
 todaySec.innerHTML = day + " " + time;
 
-function displayForecast() {
+// default city
+let apiKey = "b88bf542c765dd6636e18de839741a48";
+let city = "Shiraz";
+let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+
+function displayForecast(response) {
+  console.log(response);
   let forecast_div = document.querySelector("#forecast");
   let forcastHTML = "";
   let days = ["Sat", "Sun", "Mon", "Tue", "Wed"];
@@ -38,23 +55,13 @@ function displayForecast() {
   forecast_div.innerHTML = forcastHTML;
 }
 
-// variables
-let cityName = document.querySelector(".city-name");
-let humidity = document.querySelector(".humidity");
-let wind = document.querySelector(".wind");
-let weatherdesc = document.querySelector(".weather-desc");
-let degreeH1 = document.querySelector(".degree-h1");
-let icon_img = document.querySelector(".today-icon");
-let celDegree = 0;
-let celDegreeRounded = 0;
-let farDegree = 0;
+function getForecast(coordinates) {
+  console.log(coordinates);
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
 
-// default city
-let apiKey = "b88bf542c765dd6636e18de839741a48";
-let city = "Shiraz";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
-
-axios.get(apiUrl).then(function (response) {
+function weatherApiCall(response) {
   console.log(response);
   cityName.innerHTML = response.data.name;
   weatherdesc.innerHTML = response.data.weather[0].main;
@@ -67,7 +74,9 @@ axios.get(apiUrl).then(function (response) {
   let icon_code = response.data.weather[0].icon;
   let icon_url = `https://openweathermap.org/img/wn/${icon_code}@2x.png`;
   icon_img.setAttribute("src", icon_url);
-});
+  getForecast(response.data.coord);
+}
+axios.get(apiUrl).then(weatherApiCall);
 
 // search btn
 let searchBtn = document.querySelector(".search-btn");
@@ -78,19 +87,7 @@ searchBtn.addEventListener("click", function (event) {
     city = cityInp.value;
   }
   apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
-  axios.get(apiUrl).then(function (response) {
-    cityName.innerHTML = response.data.name;
-    weatherdesc.innerHTML = response.data.weather[0].main;
-    humidity.innerHTML = "Humidity: " + response.data.main.humidity;
-    wind.innerHTML = "Wind: " + response.data.wind.speed + " meter/sec";
-    celDegree = response.data.main.temp;
-    farDegree = Math.round(celDegree * (9 / 5) + 32);
-    celDegreeRounded = Math.round(celDegree);
-    degreeH1.innerHTML = celDegreeRounded;
-    let icon_code = response.data.weather[0].icon;
-    let icon_url = `https://openweathermap.org/img/wn/${icon_code}@2x.png`;
-    icon_img.setAttribute("src", icon_url);
-  });
+  axios.get(apiUrl).then(weatherApiCall);
 });
 
 // current location
@@ -106,19 +103,7 @@ let currentBtn = document.querySelector(".current-btn");
 currentBtn.addEventListener("click", function (event) {
   event.preventDefault();
   apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
-  axios.get(apiUrl).then(function (response) {
-    cityName.innerHTML = response.data.name;
-    weatherdesc.innerHTML = response.data.weather[0].main;
-    humidity.innerHTML = "Humidity: " + response.data.main.humidity;
-    wind.innerHTML = "Wind: " + response.data.wind.speed + " meter/sec";
-    celDegree = response.data.main.temp;
-    farDegree = Math.round(celDegree * (9 / 5) + 32);
-    celDegreeRounded = Math.round(celDegree);
-    degreeH1.innerHTML = celDegreeRounded;
-    let icon_code = response.data.weather[0].icon;
-    let icon_url = `https://openweathermap.org/img/wn/${icon_code}@2x.png`;
-    icon_img.setAttribute("src", icon_url);
-  });
+  axios.get(apiUrl).then(weatherApiCall);
 });
 
 // cel to far degree
@@ -138,5 +123,3 @@ farDegBtn.addEventListener("click", function () {
   celDegBtn.classList.add("deactive");
   celDegBtn.classList.remove("active");
 });
-
-displayForecast();
