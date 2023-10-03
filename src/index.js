@@ -1,55 +1,70 @@
-// variables
-let cityName = document.querySelector(".city-name");
-let humidity = document.querySelector(".humidity");
-let wind = document.querySelector(".wind");
-let weatherdesc = document.querySelector(".weather-desc");
-let degreeH1 = document.querySelector(".degree-h1");
-let icon_img = document.querySelector(".today-icon");
+// global variables
+let apiKey = "b88bf542c765dd6636e18de839741a48";
+let city = "Shiraz";
+let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 let celDegree = 0;
 let celDegreeRounded = 0;
 let farDegree = 0;
 
-// default date
-let todaySec = document.querySelector(".today-sec");
-let now = new Date();
-let days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-let day = days[now.getDay()];
-let time = `${now.getHours()}:${now.getMinutes()}`;
-todaySec.innerHTML = day + " " + time;
+function formatDate(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  let day = days[date.getDay()];
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  if (hours < 10) {
+    hours = 0 + hours;
+  }
+  if (minutes < 10) {
+    minutes = 0 + minutes;
+  }
 
-// default city
-let apiKey = "b88bf542c765dd6636e18de839741a48";
-let city = "Shiraz";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
+  return `${day} ${hours}:${minutes}`;
+}
+
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let day = days[date.getDay()];
+  return day;
+}
 
 function displayForecast(response) {
   console.log(response);
   let forecast_div = document.querySelector("#forecast");
+  let days_objs = response.data.daily;
   let forcastHTML = "";
-  let days = ["Sat", "Sun", "Mon", "Tue", "Wed"];
-  days.forEach(function (day) {
-    forcastHTML =
-      forcastHTML +
-      `<div class="col text-center">
-      <p class="week-day text-secondary m-0">${day}</p>
-      <img
-        width="36"
-        src="https://openweathermap.org/img/wn/01d@2x.png"
-        alt="weather-condition"
-      />
-      <p class="m-0">
-        <span class="max-degree text-dark">30°</span>
-        <span class="min-degree text-secondary">20°</span>
-      </p>
-    </div>`;
+  days_objs.forEach(function (dayObj, index) {
+    if (index < 6) {
+      forcastHTML =
+        forcastHTML +
+        `<div class="col text-center">
+        <p class="week-day text-secondary m-0">${formatDay(dayObj.dt)}</p>
+        <img
+          width="36"
+          src="https://openweathermap.org/img/wn/${
+            dayObj.weather[0].icon
+          }@2x.png"
+          alt="weather-condition"
+        />
+        <p class="m-0">
+          <span class="max-degree text-dark">${Math.round(
+            dayObj.temp.max
+          )}°</span>
+          <span class="min-degree text-secondary">${Math.round(
+            dayObj.temp.min
+          )}°</span>
+        </p>
+      </div>`;
+    }
   });
 
   forecast_div.innerHTML = forcastHTML;
@@ -63,16 +78,25 @@ function getForecast(coordinates) {
 
 function weatherApiCall(response) {
   console.log(response);
+  let cityName = document.querySelector(".city-name");
+  let humidity = document.querySelector(".humidity");
+  let wind = document.querySelector(".wind");
+  let weatherdesc = document.querySelector(".weather-desc");
+  let degreeH1 = document.querySelector(".degree-h1");
+  let icon_img = document.querySelector(".today-icon");
+  let todaySec = document.querySelector(".today-sec");
+
+  celDegree = response.data.main.temp;
+  farDegree = Math.round(celDegree * (9 / 5) + 32);
+  celDegreeRounded = Math.round(celDegree);
+
   cityName.innerHTML = response.data.name;
   weatherdesc.innerHTML = response.data.weather[0].main;
   humidity.innerHTML = "Humidity: " + response.data.main.humidity + "%";
   wind.innerHTML = "Wind: " + response.data.wind.speed + " meter/sec";
-  celDegree = response.data.main.temp;
-  farDegree = Math.round(celDegree * (9 / 5) + 32);
-  celDegreeRounded = Math.round(celDegree);
   degreeH1.innerHTML = celDegreeRounded;
-  let icon_code = response.data.weather[0].icon;
-  let icon_url = `https://openweathermap.org/img/wn/${icon_code}@2x.png`;
+  todaySec.innerHTML = formatDate(response.data.dt);
+  let icon_url = `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`;
   icon_img.setAttribute("src", icon_url);
   getForecast(response.data.coord);
 }
