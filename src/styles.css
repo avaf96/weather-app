@@ -13,24 +13,24 @@ h1 {
 .cel-degree {
   color: #2d2d2d;
 }
-.far-degree {
+/* .far-degree {
   color: #808080;
-}
+} */
 
-.active {
+/* .active {
   color: #2d2d2d;
   text-decoration: none;
-}
+} */
 
-.deactive {
+/* .deactive {
   color: #808080;
-}
+} */
 
-.cel-degree:hover,
+/* .cel-degree:hover,
 .far-degree:hover {
   cursor: pointer;
   text-decoration: underline;
-}
+} */
 
 .week-day,
 .min-degree,

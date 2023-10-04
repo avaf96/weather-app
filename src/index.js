@@ -4,7 +4,7 @@ let city = "Shiraz";
 let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 let celDegree = 0;
 let celDegreeRounded = 0;
-let farDegree = 0;
+// let farDegree = 0;
 
 function formatDate(timestamp) {
   let date = new Date(timestamp * 1000);
@@ -21,10 +21,10 @@ function formatDate(timestamp) {
   let hours = date.getHours();
   let minutes = date.getMinutes();
   if (hours < 10) {
-    hours = 0 + hours;
+    hours = "0" + hours;
   }
   if (minutes < 10) {
-    minutes = 0 + minutes;
+    minutes = "0" + minutes;
   }
 
   return `${day} ${hours}:${minutes}`;
@@ -87,7 +87,7 @@ function weatherApiCall(response) {
   let todaySec = document.querySelector(".today-sec");
 
   celDegree = response.data.main.temp;
-  farDegree = Math.round(celDegree * (9 / 5) + 32);
+  // farDegree = Math.round(celDegree * (9 / 5) + 32);
   celDegreeRounded = Math.round(celDegree);
 
   cityName.innerHTML = response.data.name;
@@ -131,19 +131,19 @@ currentBtn.addEventListener("click", function (event) {
 });
 
 // cel to far degree
-let celDegBtn = document.querySelector(".cel-degree");
-let farDegBtn = document.querySelector(".far-degree");
-celDegBtn.addEventListener("click", function () {
-  degreeH1.innerHTML = celDegreeRounded;
-  celDegBtn.classList.add("active");
-  celDegBtn.classList.remove("deactive");
-  farDegBtn.classList.add("deactive");
-  farDegBtn.classList.remove("active");
-});
-farDegBtn.addEventListener("click", function () {
-  degreeH1.innerHTML = farDegree;
-  farDegBtn.classList.add("active");
-  farDegBtn.classList.remove("deactive");
-  celDegBtn.classList.add("deactive");
-  celDegBtn.classList.remove("active");
-});
+// let celDegBtn = document.querySelector(".cel-degree");
+// let farDegBtn = document.querySelector(".far-degree");
+// celDegBtn.addEventListener("click", function () {
+//   degreeH1.innerHTML = celDegreeRounded;
+//   celDegBtn.classList.add("active");
+//   celDegBtn.classList.remove("deactive");
+//   farDegBtn.classList.add("deactive");
+//   farDegBtn.classList.remove("active");
+// });
+// farDegBtn.addEventListener("click", function () {
+//   degreeH1.innerHTML = farDegree;
+//   farDegBtn.classList.add("active");
+//   farDegBtn.classList.remove("deactive");
+//   celDegBtn.classList.add("deactive");
+//   celDegBtn.classList.remove("active");
+// });
