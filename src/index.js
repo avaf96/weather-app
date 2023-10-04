@@ -38,7 +38,7 @@ function formatDay(timestamp) {
 }
 
 function displayForecast(response) {
-  console.log(response);
+  // console.log(response);
   let forecast_div = document.querySelector("#forecast");
   let days_objs = response.data.daily;
   let forcastHTML = "";
@@ -71,13 +71,13 @@ function displayForecast(response) {
 }
 
 function getForecast(coordinates) {
-  console.log(coordinates);
+  // console.log(coordinates);
   let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displayForecast);
 }
 
 function weatherApiCall(response) {
-  console.log(response);
+  // console.log(response);
   let cityName = document.querySelector(".city-name");
   let humidity = document.querySelector(".humidity");
   let wind = document.querySelector(".wind");
@@ -115,20 +115,20 @@ searchBtn.addEventListener("click", function (event) {
 });
 
 // current location
-let lat = 0;
-let lon = 0;
-navigator.geolocation.getCurrentPosition(function (position) {
-  lat = position.coords.latitude;
-  lon = position.coords.longitude;
-});
+// let lat = 0;
+// let lon = 0;
+// navigator.geolocation.getCurrentPosition(function (position) {
+//   lat = position.coords.latitude;
+//   lon = position.coords.longitude;
+// });
 
 // current btn
-let currentBtn = document.querySelector(".current-btn");
-currentBtn.addEventListener("click", function (event) {
-  event.preventDefault();
-  apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
-  axios.get(apiUrl).then(weatherApiCall);
-});
+// let currentBtn = document.querySelector(".current-btn");
+// currentBtn.addEventListener("click", function (event) {
+//   event.preventDefault();
+//   apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+//   axios.get(apiUrl).then(weatherApiCall);
+// });
 
 // cel to far degree
 // let celDegBtn = document.querySelector(".cel-degree");
